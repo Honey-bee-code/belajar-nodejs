@@ -7,9 +7,9 @@
       <% } else { %>
       <div class="card bg-dark" style="width: 18rem">
         <div class="card-body">
-          <h5 class="card-title"><%= contact.nama %></h5>
-          <h6 class="card-subtitle mb-2 text-muted"><%= contact.nohp %></h6>
-          <p class="card-text"><%= contact.email %></p>
+          <h5 class="card-title mb-4"><%= contact.nama %></h5>
+          <h6 class="card-subtitle mb-2 text-muted"><i class="bi bi-telephone-plus"></i>  <%= contact.nohp %></h6>
+          <p class="card-text"><i class="bi bi-envelope"></i>  <%= contact.email %></p>
           <a href="/contact" class="btn btn-primary">&laquo; Kembali</a>
         </div>
       </div>

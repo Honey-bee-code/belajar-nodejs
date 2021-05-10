@@ -1,6 +1,7 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
-const { loadContacts, findContact, addContact } = require("./utilities/contacts");
+const { loadContacts, findContact, addContact, cekDuplikat } = require("./utilities/contacts");
+const { body, check, validationResult } = require("express-validator");
 
 const app = express();
 const port = 3000;
@@ -13,7 +14,7 @@ app.use(expressLayouts);
 
 // Built-in middleware
 app.use(express.static("public"));
-app.use(express.urlencoded()); // untuk paring req.body
+app.use(express.urlencoded({ extended: true })); // untuk paring req.body
 
 app.get("/", (req, res) => {
   res.render("index", { layout: "layouts/main-layout", title: "Homepage" });
@@ -33,16 +34,63 @@ app.get("/contact", (req, res) => {
 });
 
 app.get("/contact/add", (req, res) => {
+  const id = "";
+  const nohp = "";
+  const email = "";
+  const nama = "";
+
   res.render("contact-add", {
     layout: "layouts/main-layout",
     title: "Add Contact",
+    id,
+    nohp,
+    email,
+    nama,
   });
 });
 
-app.post("/contact", (req, res) => {
-  addContact(req.body);
-  res.redirect("/contact");
-});
+app.post(
+  "/contact",
+
+  // validator
+  check("id", "<i class='bi bi-person-badge'></i>   ID harus terisi !").notEmpty(),
+  body("id").custom((value) => {
+    const duplikat = cekDuplikat(value);
+    if (duplikat) {
+      throw new Error("<i class='bi bi-person-badge'></i>    ID sudah terpakai, silahkan gunakan ID yang lain !");
+    }
+    return true;
+  }),
+  check("nama", "<i class='bi bi-person-check-fill'></i>   Nama harus terisi !").notEmpty(),
+  check("nohp", "<i class='bi bi-telephone-plus'></i>   No HP harus terisi !").notEmpty(),
+  check("nohp", "<i class='bi bi-telephone-plus'></i>   Format No HP salah !").isMobilePhone("id-ID"),
+  check("email", "<i class='bi bi-envelope'></i>    Format Email salah !").isEmail(),
+
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      // res.send(errors.array());
+
+      const id = req.body.id;
+      const nohp = req.body.nohp;
+      const email = req.body.email;
+      const nama = req.body.nama;
+      res.render("contact-add", {
+        layout: "layouts/main-layout",
+        title: "Add Contact",
+        errors: errors.array(),
+        id,
+        nohp,
+        email,
+        nama,
+      });
+      return false;
+    }
+
+    addContact(req.body);
+    res.redirect("/contact");
+  }
+);
 
 app.get("/contact/:id", (req, res) => {
   const id = req.params.id;
