@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <h2>Contact List</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (contacts.length < 1) { %>
+            <tr>
+              <td colspan="4">
+                <div class="alert alert-warning" role="alert">
+                  Data kontak kosong ! <a href="#" class="alert-link">Silahkan klik</a> untuk menambah kontak baru.
+                </div>
+              </td>
+            </tr>
+          <% } %>
+          <% contacts.forEach((contact, i) => { %>
+          <tr>
+            <th scope="row"><%=i+1%></th>
+            <td><%= contact.nama %></td>
+            <td><%= contact.nohp %></td>
+            <td>
+              <a href="/contact/<%= contact.id %> " class="btn badge rounded-pill bg-primary"><i class="bi bi-info-circle-fill"></i> Detail</a>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
