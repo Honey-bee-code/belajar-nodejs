@@ -28,4 +28,17 @@ const findContact = (id) => {
     return contact
 }
 
-module.exports = {loadContacts, findContact}
+// menuliskan / menimpa file contacts.json dengan data baru
+const saveContacts = (contacts) => {
+    fs.writeFileSync('data/contacts.json', JSON.stringify(contacts))
+}
+
+// menambah data contact baru
+const addContact = (contact) => {
+    const contacts = loadContacts()
+    contacts.push(contact)
+    saveContacts(contacts)
+}
+
+
+module.exports = {loadContacts, findContact, addContact}

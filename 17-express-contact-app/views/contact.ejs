@@ -2,12 +2,14 @@
   <div class="row">
     <div class="col-md-8">
       <h2>Contact List</h2>
-      <table class="table">
+      <a href="/contact/add" class="btn btn-primary badge m-2">Add Contact</a>
+      <table class="table table-hover">
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">ID</th>
             <th scope="col">Name</th>
-            <th scope="col">Phone Number</th>
+            <th scope="col">Mobile Number</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -23,7 +25,8 @@
           <% } %>
           <% contacts.forEach((contact, i) => { %>
           <tr>
-            <th scope="row"><%=i+1%></th>
+            <th scope="row"><%= i + 1 %></th>
+            <td scope="row"><%= contact.id%></td>
             <td><%= contact.nama %></td>
             <td><%= contact.nohp %></td>
             <td>
