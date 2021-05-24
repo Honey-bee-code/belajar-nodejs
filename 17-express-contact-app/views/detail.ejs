@@ -10,7 +10,9 @@
           <h5 class="card-title mb-4"><%= contact.nama %></h5>
           <h6 class="card-subtitle mb-2 text-muted"><i class="bi bi-telephone-plus"></i>  <%= contact.nohp %></h6>
           <p class="card-text"><i class="bi bi-envelope"></i>  <%= contact.email %></p>
-          <a href="/contact" class="btn btn-primary">&laquo; Kembali</a>
+          <a href="/contact/edit/<%= contact.id %>" class="btn btn-info">Edit</a>
+          <a href="/contact/delete/<%= contact.id %>" class="btn btn-danger" onclick="return confirm('Yakin akan menghapus data?')">Delete</a>
+          <p></p><a href="/contact" class="btn btn-primary">&laquo; Back</a>
         </div>
       </div>
       <% } %> 
